@@ -13,10 +13,10 @@ public class Game extends GameLoop {
     private static int current1, current2;
     private static World world;
 
-    public Game(World world, List<Knight> team1, List<Knight> team2) {
+    public Game(World world, List<Knight> team1, List<Knight> team2, int first_rival_id) {
         this.team1 = team1;
         this.team2 = team2;
-        this.current1 = this.current2 = 0;
+        this.current1 = this.current2 = first_rival_id;
         this.world = world;
         Game.world.setGame(this);
     }

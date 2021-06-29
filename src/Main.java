@@ -34,8 +34,21 @@ public class Main {
     public static void main(String[] args) {
         addAudio();
 
+        startIntro();
+
         List<Knight> team1 = new ArrayList<>();
         List<Knight> team2 = new ArrayList<>();
+
+        startMenu(team1, team2);
+
+        startGame(team1, team2, 0);
+    }
+    // Start Introduction Page
+    private static void startIntro() {
+    }
+
+    //Start Knights Selection Page
+    private static void startMenu(List<Knight> team1, List<Knight> team2) {
         // initialization procedure
         Knight p1 = new Gray(100, new Point(300, 300), Direction.RIGHT);
         Knight p3 = new Emily(100, new Point(300, 300), Direction.RIGHT);
@@ -50,15 +63,18 @@ public class Main {
         team2.add(p4);
         p2.setTeam(2);
         p4.setTeam(2);
+    }
 
-        World world = new World(new KnightCollisionHandler(), p1, p2); // model
-        Game game = new Game(world, team1, team2); // controller
+    // Start Game
+    private static void startGame(List<Knight> team1, List<Knight> team2, int first_rival_id) {
+        World world = new World(new KnightCollisionHandler(), team1.get(first_rival_id), team2.get(first_rival_id)); // model
+        Game game = new Game(world, team1, team2, first_rival_id); // controller
         GameView view = new GameView(game); // view
         game.start(); // run the game and the game loop
         view.launch(); // launch the GUI
     }
 
-    public static void addAudio() {
+    private static void addAudio() {
         addAudioByFilePath(EmilyAttacking.AUDIO_ATTACK, new File("assets/character/emily/audio/attack.wav"));
         addAudioByFilePath(GrayAttacking.AUDIO_ATTACK, new File("assets/character/gray/audio/attack.wav"));
         addAudioByFilePath(GrayKicking.AUDIO_KICK, new File("assets/character/gray/audio/kick.wav"));
