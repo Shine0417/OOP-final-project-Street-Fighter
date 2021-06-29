@@ -10,6 +10,7 @@ public abstract class Sprite {
     protected World world;
     protected Point location = new Point();
     protected Direction face = Direction.RIGHT;
+    private int team;
 
     public abstract void update();
 
@@ -62,14 +63,21 @@ public abstract class Sprite {
     public Rectangle getArea(Dimension offset, Dimension size) {
         if (face == Direction.LEFT) {
             Rectangle range = getRange();
-            return new Rectangle(new Point(location.x + range.width - offset.width - size.width,
-                    offset.height + location.y), size);
+            return new Rectangle(
+                    new Point(location.x + range.width - offset.width - size.width, offset.height + location.y), size);
         }
-        return new Rectangle(new Point(offset.width + location.x,
-                offset.height + location.y), size);
+        return new Rectangle(new Point(offset.width + location.x, offset.height + location.y), size);
     }
 
     public boolean isAlive() {
         return world != null;
+    }
+
+    public int getTeam() {
+        return team;
+    }
+
+    public void setTeam(int team) {
+        this.team = team;
     }
 }

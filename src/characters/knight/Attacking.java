@@ -54,9 +54,7 @@ public class Attacking extends Sequence {
         var sprites = world.getSprites(damageArea);
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
-            if (knight != sprite){
-                if(sprite instanceof Fireball && ((Fireball) sprite).getCaster() == knight)
-                    return;                    
+            if (knight.getTeam() != sprite.getTeam()){               
                 sprite.onDamaged(damageArea, knight.getDamage());
                 hasClash = true;
             }

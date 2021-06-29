@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import characters.knight.Knight;
+import controller.Game;
 import skill.Fireball.Fireball;
 
 import static java.util.Arrays.stream;
@@ -15,6 +16,8 @@ import static java.util.stream.Collectors.toSet;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class World {
+    private Game game;
+
     private final int BOUNDDRY_X = 1200;
     private final int BOUNDDRY_Y = 1000;
 
@@ -22,17 +25,18 @@ public class World {
     private final CollisionHandler collisionHandler;
     public static int count_p1 = 2;
     public static int count_p2 = 2;
-    //private final Sprite backup_P1;
-    //private final Sprite backup_P2;
+
+    // private final Sprite backup_P1;
+    // private final Sprite backup_P2;
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
-        //addSprites(sprites);
+        // addSprites(sprites);
         addSprites(sprites[0]);
         addSprites(sprites[1]);
-        //backup_P1 = sprites[2];
-        //backup_P2 = sprites[3];
-        //addSprite(backup_P1);
-        //addSprites(sprites[2]);
+        // backup_P1 = sprites[2];
+        // backup_P2 = sprites[3];
+        // addSprite(backup_P1);
+        // addSprites(sprites[2]);
     }
 
     public void update() {
@@ -50,11 +54,11 @@ public class World {
         sprites.add(sprite);
         sprite.setWorld(this);
     }
-    //public void changeSprite(Sprite sprite) {
-    //    //sprites.remove(sprite);
-    //    sprite.setWorld(null);
-    //    //sprites[2].setWorld(this);
-    //}
+    // public void changeSprite(Sprite sprite) {
+    // //sprites.remove(sprite);
+    // sprite.setWorld(null);
+    // //sprites[2].setWorld(this);
+    // }
 
     public void removeSprite(Sprite sprite) {
         sprites.remove(sprite);
@@ -119,5 +123,13 @@ public class World {
 
     public int getWidth() {
         return BOUNDDRY_X;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

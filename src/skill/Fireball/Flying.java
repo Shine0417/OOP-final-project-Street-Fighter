@@ -41,7 +41,7 @@ public class Flying extends CyclicSequence {
         var sprites = world.getSprites(damageArea);
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
-            if (spell != sprite && spell.getCaster() != sprite) {
+            if (spell.getTeam() != sprite.getTeam()) {
                 sprite.onDamaged(damageArea, spell.getDamage());
                 hasClash = true;
             }

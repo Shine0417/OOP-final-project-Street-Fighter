@@ -9,15 +9,16 @@ import model.World;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Game extends GameLoop {
-    private static List<Knight> player1, player2;
+    private static List<Knight> team1, team2;
     private static int current1, current2;
     private static World world;
 
-    public Game(World world, List<Knight> player1, List<Knight> player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public Game(World world, List<Knight> team1, List<Knight> team2) {
+        this.team1 = team1;
+        this.team2 = team2;
         this.current1 = this.current2 = 0;
         this.world = world;
+        Game.world.setGame(this);
     }
 
     public void moveKnight(int playerNumber, Direction direction) {
@@ -28,15 +29,15 @@ public class Game extends GameLoop {
         if (getPlayer(playerNumber).isJumping())
             return;
         if (playerNumber == 1) {
-            int anotherPlayer = (current1 + 1) % player1.size();
-            if (!player1.get(anotherPlayer).isDead()) {
-                changeKnight(player1.get(current1), player1.get(anotherPlayer));
+            int anotherPlayer = (current1 + 1) % team1.size();
+            if (!team1.get(anotherPlayer).isDead()) {
+                changeKnight(team1.get(current1), team1.get(anotherPlayer));
                 current1 = anotherPlayer;
             }
         } else if (playerNumber == 2) {
-            int anotherPlayer = (current2 + 1) % player2.size();
-            if (!player2.get(anotherPlayer).isDead()) {
-                changeKnight(player2.get(current2), player2.get(anotherPlayer));
+            int anotherPlayer = (current2 + 1) % team2.size();
+            if (!team2.get(anotherPlayer).isDead()) {
+                changeKnight(team2.get(current2), team2.get(anotherPlayer));
                 current2 = anotherPlayer;
             }
         }
@@ -46,7 +47,7 @@ public class Game extends GameLoop {
         newKnight.setLocation(oldKnight.getLocation());
         newKnight.setFace(oldKnight.getFace());
         newKnight.getDirections().clear();
-        if(!oldKnight.getDirections().isEmpty()){
+        if (!oldKnight.getDirections().isEmpty()) {
             newKnight.getDirections().add(newKnight.getFace());
             newKnight.triggerWalk();
         }
@@ -86,12 +87,21 @@ public class Game extends GameLoop {
     }
 
     public Knight getPlayer(int playerNumber) {
-        return playerNumber == 1 ? player1.get(current1) : player2.get(current2);
+        return playerNumber == 1 ? team1.get(current1) : team2.get(current2);
     }
 
     @Override
     protected World getWorld() {
         return world;
+    }
+
+    public Boolean checkGameOver() {
+        if ((team1.stream().filter(knight -> !knight.isDead()).count() == 0)
+                || (team2.stream().filter(knight -> !knight.isDead()).count() == 0)) {
+            System.out.println("GameOver");
+            return true;
+        }
+        return false;
     }
 
 }

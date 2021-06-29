@@ -2,6 +2,7 @@ package characters.knight;
 
 import fsm.FiniteStateMachine;
 import fsm.State;
+import media.AudioPlayer;
 import model.Direction;
 import model.MagicPointSprite;
 import model.SpriteShape;
@@ -22,6 +23,9 @@ import static fsm.FiniteStateMachine.Transition.from;
 public class Knight extends MagicPointSprite {
     public static final int KNIGHT_HP = 500;
     public static final int KNIGHT_MP = 200;
+    public String AUDIO_INJURED;
+    public String AUDIO_DEAD;
+
     protected String AUDIO_CAST;
     protected SpriteShape shape;
     protected SpriteShape crouchShape;
@@ -29,9 +33,10 @@ public class Knight extends MagicPointSprite {
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
     protected Fireball spell;
+    // todo add acceleration(gravity easier)
 
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED, CRUOCH, JUMP, STOP_CROUCH, SKILL, KICK
+        WALK, STOP, ATTACK, DAMAGED, CRUOCH, JUMP, STOP_CROUCH, SKILL, KICK, INJURED, DEAD
     }
 
     public Knight(int damage, Point location, Direction face) {
@@ -42,7 +47,7 @@ public class Knight extends MagicPointSprite {
     }
 
     protected void knightTransitionTable(FiniteStateMachine fsm, State idle, State walking, State attacking,
-            State jumping, State crouch, State casting, State kicking) {
+            State jumping, State crouch, State casting, State kicking, State injured, State dead) {
         fsm.setInitialState(idle);
 
         // Attack, walking and idle
@@ -70,6 +75,24 @@ public class Knight extends MagicPointSprite {
         fsm.addTransition(from(attacking).when(Event.SKILL).to(casting));
         fsm.addTransition(from(kicking).when(Event.SKILL).to(casting));
 
+        // Injured
+        fsm.addTransition(from(idle).when(Event.INJURED).to(injured));
+        fsm.addTransition(from(walking).when(Event.INJURED).to(injured));
+        fsm.addTransition(from(crouch).when(Event.INJURED).to(injured));
+        fsm.addTransition(from(attacking).when(Event.INJURED).to(injured));
+        fsm.addTransition(from(kicking).when(Event.INJURED).to(injured));
+        fsm.addTransition(from(casting).when(Event.INJURED).to(injured));
+        // fsm.addTransition(from(jumping).when(Event.INJURED).to(injured)); TODO add jump-> change hero, injured
+        
+        // dead
+        fsm.addTransition(from(idle).when(Event.DEAD).to(dead));
+        fsm.addTransition(from(walking).when(Event.DEAD).to(dead));
+        fsm.addTransition(from(crouch).when(Event.DEAD).to(dead));
+        fsm.addTransition(from(attacking).when(Event.DEAD).to(dead));
+        fsm.addTransition(from(kicking).when(Event.DEAD).to(dead));
+        fsm.addTransition(from(casting).when(Event.DEAD).to(dead));
+        fsm.addTransition(from(injured).when(Event.DEAD).to(dead));
+        // fsm.addTransition(from(jumping).when(Event.DEAD).to(dead)); TODO add jump-> change hero, injured
     }
 
     public void attack() {
@@ -137,6 +160,20 @@ public class Knight extends MagicPointSprite {
         super.render(g);
         fsm.render(g);
     }
+
+    @Override
+    public void onDamaged(Rectangle damageArea, int damage) {
+        hpBar.onDamaged(damageArea, damage);
+        if (hpBar.isDead()) {
+            fsm.trigger(DEAD);
+            AudioPlayer.playSounds(AUDIO_DEAD);
+        }
+        else {
+            AudioPlayer.playSounds(AUDIO_INJURED);
+            fsm.trigger(INJURED);
+        }
+    }
+
 
     public Set<Direction> getDirections() {
         return directions;
