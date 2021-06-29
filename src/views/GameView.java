@@ -100,19 +100,17 @@ public class GameView extends JFrame {
                         if (G_last_pressed - S_last_pressed < 1 && S_double_pressed) {
                             game.skill(P1, 2);
                         } else if (G_last_pressed - A_last_pressed < 1 && ulti_available_P1) {
-                            System.out.println("ultimate skill of P1 to the left");
                             game.skill(P1, 3);
                         } else if (G_last_pressed - D_last_pressed < 1 && ulti_available_P1) {
-                            System.out.println("ultimate skill of P1 to the right");
                             game.skill(P1, 3);
                         } else {
                             game.kick(P1);
                         }
                         break;
                     // kick for P1
-                    // case KeyEvent.VK_E:
-                    // game.change_hero(P1);
-                    // break;
+                    case KeyEvent.VK_E:
+                        game.changeKnight(P1);
+                        break;
                     case KeyEvent.VK_UP:
                         game.jumpKnight(P2);
                         break;
@@ -144,14 +142,11 @@ public class GameView extends JFrame {
                         break;
                     case KeyEvent.VK_L:
                         L_last_pressed = LocalTime.now(ZoneId.of("Asia/Taipei")).toSecondOfDay();
-                        if (K_last_pressed - DOWN_last_pressed < 1 && DOWN_double_pressed) {
-                            System.out.println("second skill of P2");
+                        if (L_last_pressed - DOWN_last_pressed < 1 && DOWN_double_pressed) {
                             game.skill(P2, 2);
                         } else if (L_last_pressed - LEFT_last_pressed < 1 && ulti_available_P2) {
-                            System.out.println("ultimate skill of P2 to the left");
                             game.skill(P2, 3);
                         } else if (L_last_pressed - RIGHT_last_pressed < 1 && ulti_available_P2) {
-                            System.out.println("ultimate skill of P2 to the right");
                             game.skill(P2, 3);
                         } else {
                             game.kick(P2);
@@ -159,9 +154,9 @@ public class GameView extends JFrame {
 
                         break;
                     // kick for P2
-                    // case KeyEvent.VK_P:
-                    // game.change_hero(P2);
-                    // break;
+                    case KeyEvent.VK_P:
+                        game.changeKnight(P2);
+                        break;
                 }
             }
 

@@ -3,7 +3,6 @@ package skill.Fireball;
 import java.util.List;
 
 import fsm.CyclicSequence;
-import fsm.Sequence;
 import fsm.State;
 
 public class Casting extends CyclicSequence{

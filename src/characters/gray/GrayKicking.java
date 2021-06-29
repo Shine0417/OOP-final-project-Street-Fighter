@@ -15,9 +15,12 @@ import characters.knight.Attacking;
  */
 public class GrayKicking extends Attacking {
 
+    public static final String AUDIO_KICK = "gray-kick";
+
     public GrayKicking(Knight knight, StateMachine stateMachine, List<? extends State> states) {
         super(knight, stateMachine, states);
         init();
+        AUDIO = AUDIO_KICK;
     }
 
     private void init() {

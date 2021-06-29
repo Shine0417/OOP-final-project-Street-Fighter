@@ -12,7 +12,7 @@ import model.World;
 import java.awt.*;
 
 public class Flying extends CyclicSequence {
-    public static final String FIREBALL_HIT1 = "fireball_hit";
+    public static final String AUDIO_FIREBALL_HIT = "fireball_hit";
 
     protected final Fireball spell;
 
@@ -50,7 +50,7 @@ public class Flying extends CyclicSequence {
         // Add Sound TODO
         if (hasClash) {
             spell.hit();
-            // AudioPlayer.playSounds(FIREBALL_HIT);
+            AudioPlayer.playSounds(AUDIO_FIREBALL_HIT);
         } else {
             spell.getWorld().move(spell, spell.getDirection().translate());
             // AudioPlayer.playSounds(FIREBALL_HIT);

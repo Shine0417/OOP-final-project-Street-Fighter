@@ -8,6 +8,7 @@ import javax.swing.text.Position;
 
 import fsm.ImageState;
 import fsm.State;
+import media.AudioPlayer;
 import model.Direction;
 import model.Sprite;
 import model.World;
@@ -17,6 +18,7 @@ import java.awt.*;
 
 public class IceWallFlying extends Flying {
     private final int WALL_SIZE = 4;
+    public static final String AUDIO_ICEWALL_HIT = "iceWall-hit";
 
     public IceWallFlying(Fireball fireball, List<? extends State> states) {
         super(fireball, states);
@@ -59,7 +61,7 @@ public class IceWallFlying extends Flying {
         // Add Sound TODO
         if (hasClash) {
             spell.hit();
-            // AudioPlayer.playSounds(FIREBALL_HIT);
+            AudioPlayer.playSounds(AUDIO_ICEWALL_HIT);
         } else {
             if (spell.getDirection() == Direction.LEFT)
                 spell.getWorld().move(spell, new Dimension(-spell.getBodySize().width, 0));

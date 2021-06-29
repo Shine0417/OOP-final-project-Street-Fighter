@@ -15,9 +15,12 @@ import characters.knight.Knight;
  */
 public class GrayAttacking extends Attacking {
 
+    public static final String AUDIO_ATTACK = "gray-attack";
+
     public GrayAttacking(Knight knight, StateMachine stateMachine, List<? extends State> states) {
         super(knight, stateMachine, states);
         init();
+        AUDIO = AUDIO_ATTACK;
     }
 
     private void init() {

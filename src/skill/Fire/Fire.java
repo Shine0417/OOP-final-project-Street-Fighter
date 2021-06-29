@@ -41,7 +41,7 @@ public class Fire extends Lightning{
         State casting = new WaitingPerFrame(3,
                 new Casting(this, imageStatesFromFolder(filepath.concat("casting"), imageRenderer)));
         State flying = new WaitingPerFrame(6,
-                new LightningFlying(this, imageStatesFromFolder(filepath.concat("flying"), longimageRenderer)));
+                new FireFlying(this, imageStatesFromFolder(filepath.concat("flying"), longimageRenderer)));
         State triggered = new WaitingPerFrame(3,
                 new Triggered(this, imageStatesFromFolder(filepath.concat("trigger"), longimageRenderer)));
 

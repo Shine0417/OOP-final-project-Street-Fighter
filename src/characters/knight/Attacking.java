@@ -17,8 +17,9 @@ import java.util.Set;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Attacking extends Sequence {
-    public static final String AUDIO_SWORD_CLASH_1 = "sword-clash1";
-    public static final String AUDIO_SWORD_CLASH_2 = "sword-clash2";
+    public static final String AUDIO_MISS = "knight-miss";
+
+    protected String AUDIO;
     protected final Knight knight;
     private final StateMachine stateMachine;
     protected Set<Integer> damagingStateNumbers;
@@ -53,15 +54,17 @@ public class Attacking extends Sequence {
         var sprites = world.getSprites(damageArea);
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
-            if (knight != sprite && (sprite instanceof Fireball && ((Fireball) sprite).getCaster() != knight)) {
+            if (knight != sprite){
+                if(sprite instanceof Fireball && ((Fireball) sprite).getCaster() == knight)
+                    return;                    
                 sprite.onDamaged(damageArea, knight.getDamage());
                 hasClash = true;
             }
         }
         if (hasClash) {
-            AudioPlayer.playSounds(AUDIO_SWORD_CLASH_1);
+            AudioPlayer.playSounds(AUDIO);
         } else {
-            AudioPlayer.playSounds(AUDIO_SWORD_CLASH_2);
+            AudioPlayer.playSounds(AUDIO_MISS);
         }
     }
 

@@ -1,4 +1,4 @@
-package skill.Lightning;
+package skill.Fire;
 
 import java.awt.Rectangle;
 import java.util.List;
@@ -10,11 +10,9 @@ import model.World;
 import skill.Fireball.Fireball;
 import skill.Fireball.Flying;
 
-public class LightningFlying extends Flying {
+public class FireFlying extends Flying {
 
-    public static final String AUDIO_LIGHTNING_FLY = "lightning-fly";
-
-    public LightningFlying(Fireball fireball, List<? extends State> states) {
+    public FireFlying(Fireball fireball, List<? extends State> states) {
         super(fireball, states);
     }
 
@@ -23,7 +21,6 @@ public class LightningFlying extends Flying {
     public void update() {
         // TODO Auto-generated method stub
         super.update();
-        AudioPlayer.playSounds(AUDIO_LIGHTNING_FLY);
     }
 
     @Override

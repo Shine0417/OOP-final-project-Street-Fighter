@@ -12,12 +12,12 @@ import model.SpriteShape;
 import skill.FireRing.FireRing;
 import skill.Fire.Fire;
 import skill.Fireball.Fireball;
-import skill.Lightningball.Lightningball;
 
 import static utils.ImageStateUtils.imageStatesFromFolder;
-import static characters.knight.Knight.Event.*;
 
 public class Gray extends Knight {
+
+    public static final String AUDIO_CAST = "gray-cast";
 
     public Gray(int damage, Point location, Direction face) {
         super(damage, location, face);
@@ -28,6 +28,8 @@ public class Gray extends Knight {
         this.shape = shape;
         this.fsm = createTransitionTable();
         this.crouchShape = crouchShape;
+
+        super.AUDIO_CAST = AUDIO_CAST;
     }
 
     private FiniteStateMachine createTransitionTable() {

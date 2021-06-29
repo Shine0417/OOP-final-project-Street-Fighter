@@ -29,7 +29,7 @@ public class Lightning extends Fireball {
 
     @Override
     protected void init() {
-        this.shape = new SpriteShape(new Dimension(146, 176), new Dimension(66, 60), new Dimension(36, 55));
+        this.shape = new SpriteShape(new Dimension(146, 176), new Dimension(46, 60), new Dimension(36, 55));
 
         this.damage = 200;
 
