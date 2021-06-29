@@ -8,9 +8,9 @@ import java.awt.*;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class HealthPointBar extends Sprite {
-    private final int maxHp;
-    private Sprite owner;
-    private int hp;
+    protected final int maxHp;
+    protected Sprite owner;
+    protected int hp;
 
     public HealthPointBar(int hp) {
         this.maxHp = this.hp = hp;
@@ -45,7 +45,7 @@ public class HealthPointBar extends Sprite {
 
     @Override
     public Rectangle getRange() {
-        return new Rectangle(owner.getX(), owner.getY() - 15, (int) owner.getRange().getWidth(), 10);
+        return new Rectangle(owner.getX(), owner.getY() - 30, (int) owner.getRange().getWidth(), 10);
     }
 
     @Override

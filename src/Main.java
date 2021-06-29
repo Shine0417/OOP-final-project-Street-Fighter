@@ -1,4 +1,5 @@
 import controller.Game;
+import model.Direction;
 import model.HealthPointSprite;
 import model.World;
 import views.GameView;
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.io.File;
 
 import characters.emily.Emily;
+import characters.gray.Gray;
 import characters.knight.Attacking;
 import characters.knight.Knight;
 import characters.knight.KnightCollisionHandler;
@@ -27,13 +29,8 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/character/knight/audio/die.wav"));
 
         // initialization procedure
-        Knight p1 = new Knight(100, new Point(0, 0));
-        // Knight p2 = new Knight(150, new Point(300, 300));
-        Knight p2 = new Emily(150, new Point(300, 300));
-        // Knight p2 = new Punk(150, new Point(300, 300));
-        // Knight p2 = new Emily(150, new Point(300, 300));
-        // Knight p2 = new KnightTrim(150, new Point(300, 300));
-        // Knight p2 = new Bike(150, new Point(300, 300));
+        Knight p1 = new Gray(100, new Point(300, 300), Direction.RIGHT);
+        Knight p2 = new Emily(150, new Point(700, 300), Direction.LEFT);
 
         World world = new World(new KnightCollisionHandler(), p1, p2);  // model
         Game game = new Game(world, p1, p2);  // controller

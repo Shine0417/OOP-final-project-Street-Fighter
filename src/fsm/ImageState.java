@@ -23,4 +23,8 @@ public class ImageState implements State {
     public void render(Graphics g) {
         render.render(image, g);
     }
+
+    public Image getImage(){
+        return image;
+    }
 }

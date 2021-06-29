@@ -6,6 +6,7 @@ import fsm.StateMachine;
 import media.AudioPlayer;
 import model.Sprite;
 import model.World;
+import skill.Fireball.Fireball;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -18,9 +19,9 @@ import java.util.Set;
 public class Attacking extends Sequence {
     public static final String AUDIO_SWORD_CLASH_1 = "sword-clash1";
     public static final String AUDIO_SWORD_CLASH_2 = "sword-clash2";
-    private final Knight knight;
+    protected final Knight knight;
     private final StateMachine stateMachine;
-    private final Set<Integer> damagingStateNumbers = new HashSet<>(List.of(6));
+    protected Set<Integer> damagingStateNumbers;
 
     public Attacking(Knight knight, StateMachine stateMachine, List<? extends State> states) {
         super(states);
@@ -41,18 +42,18 @@ public class Attacking extends Sequence {
     @Override
     public void render(Graphics g) {
         super.render(g);
-         Rectangle damageArea = damageArea();
-         g.setColor(Color.BLUE);
-         g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
+        Rectangle damageArea = damageArea();
+        g.setColor(Color.BLUE);
+        g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
     }
 
-    private void effectDamage() {
+    protected void effectDamage() {
         World world = knight.getWorld();
         Rectangle damageArea = damageArea();
         var sprites = world.getSprites(damageArea);
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
-            if (knight != sprite) {
+            if (knight != sprite && (sprite instanceof Fireball && ((Fireball) sprite).getCaster() != knight)) {
                 sprite.onDamaged(damageArea, knight.getDamage());
                 hasClash = true;
             }
@@ -64,14 +65,20 @@ public class Attacking extends Sequence {
         }
     }
 
-    private Rectangle damageArea() {
-        return knight.getArea(new Dimension(87, 70),
-                new Dimension(55, 88));
+    protected Rectangle damageArea() {
+        return knight.getArea(new Dimension(87, 70), // box offset x, y
+                new Dimension(55, 88));// box width, box height
     }
 
     @Override
     protected void onSequenceEnd() {
         currentPosition = 0;
         stateMachine.reset();
+        knight.triggerWalk();
+    }
+
+    @Override
+    public String toString() {
+        return "Attacking";
     }
 }

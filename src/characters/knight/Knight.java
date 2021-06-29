@@ -1,83 +1,87 @@
 package characters.knight;
 
 import fsm.FiniteStateMachine;
-import fsm.ImageRenderer;
-import fsm.ImageState;
 import fsm.State;
-import fsm.WaitingPerFrame;
 import model.Direction;
-import model.HealthPointSprite;
+import model.MagicPointSprite;
 import model.SpriteShape;
+import skill.FireRing.FireRing;
+import skill.Fireball.Fireball;
+import skill.Lightningball.Lightningball;
 
 import java.awt.*;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static characters.knight.Knight.Event.*;
-import static fsm.FiniteStateMachine.Transition.from;
 import static model.Direction.LEFT;
+
+import static fsm.FiniteStateMachine.Transition.from;
 import static utils.ImageStateUtils.imageStatesFromFolder;
+import static characters.knight.Knight.Event.*;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class Knight extends HealthPointSprite {
+public class Knight extends MagicPointSprite {
     public static final int KNIGHT_HP = 500;
-    private final SpriteShape shape;
-    private final FiniteStateMachine fsm;
+    public static final int KNIGHT_MP = 200;
+
+    protected SpriteShape shape;
+    protected SpriteShape crouchShape;
+    protected FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
+    protected Fireball spell;
 
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED
+        WALK, STOP, ATTACK, DAMAGED, CRUOCH, JUMP, STOP_CROUCH, SKILL, KICK
     }
 
-    public Knight(int damage, Point location) {
-        super(KNIGHT_HP);
+    public Knight(int damage, Point location, Direction face) {
+        super(KNIGHT_HP, KNIGHT_MP);
+        this.face = face;
         this.damage = damage;
         this.location = location;
-        shape = new SpriteShape(new Dimension(146, 176), new Dimension(33, 38), new Dimension(66, 105));
-        fsm = new FiniteStateMachine();
-
-        ImageRenderer imageRenderer = new KnightImageRenderer(this);
-        State idle = new WaitingPerFrame(4, new Idle(imageStatesFromFolder("assets/character/knight/idle", imageRenderer)));
-        State walking = new WaitingPerFrame(2,
-                new Walking(this, imageStatesFromFolder("assets/character/knight/walking", imageRenderer)));
-        State attacking = new WaitingPerFrame(3,
-                new Attacking(this, fsm, imageStatesFromFolder("assets/character/knight/attack", imageRenderer)));
-
-        fsm.setInitialState(idle);
-        fsm.addTransition(from(idle).when(WALK).to(walking));
-        fsm.addTransition(from(walking).when(STOP).to(idle));
-        fsm.addTransition(from(idle).when(ATTACK).to(attacking));
-        fsm.addTransition(from(walking).when(ATTACK).to(attacking));
     }
 
-    public Knight(int damage, Point location, String filepath) {
-        super(KNIGHT_HP);
-        this.damage = damage;
-        this.location = location;
-        shape = new SpriteShape(new Dimension(146, 176), new Dimension(33, 38), new Dimension(66, 105));
-        fsm = new FiniteStateMachine();
-
-        ImageRenderer imageRenderer = new KnightImageRenderer(this);
-
-        State idle = new WaitingPerFrame(4, new Idle(imageStatesFromFolder(filepath.concat("idle"), imageRenderer)));
-        State walking = new WaitingPerFrame(2,
-                new Walking(this, imageStatesFromFolder(filepath.concat("walking"), imageRenderer)));
-        State attacking = new WaitingPerFrame(3,
-                new Attacking(this, fsm, imageStatesFromFolder(filepath.concat("attack"), imageRenderer)));
-
+    protected void knightTransitionTable(FiniteStateMachine fsm, State idle, State walking, State attacking,
+            State jumping, State crouch, State casting, State kicking) {
         fsm.setInitialState(idle);
-        fsm.addTransition(from(idle).when(WALK).to(walking));
-        fsm.addTransition(from(walking).when(STOP).to(idle));
-        fsm.addTransition(from(idle).when(ATTACK).to(attacking));
-        fsm.addTransition(from(walking).when(ATTACK).to(attacking));
+
+        // Attack, walking and idle
+        // Kick
+        fsm.addTransition(from(idle).when(Event.WALK).to(walking));
+        fsm.addTransition(from(walking).when(Event.STOP).to(idle));
+        fsm.addTransition(from(idle).when(Event.ATTACK).to(attacking));
+        fsm.addTransition(from(walking).when(Event.ATTACK).to(attacking));
+        fsm.addTransition(from(idle).when(Event.KICK).to(kicking));
+        fsm.addTransition(from(walking).when(Event.KICK).to(kicking));
+
+        // Jump
+        fsm.addTransition(from(walking).when(Event.JUMP).to(jumping));
+        fsm.addTransition(from(idle).when(Event.JUMP).to(jumping));
+
+        // Crouch
+        fsm.addTransition(from(idle).when(Event.CRUOCH).to(crouch));
+        fsm.addTransition(from(walking).when(Event.CRUOCH).to(crouch));
+        fsm.addTransition(from(crouch).when(Event.STOP_CROUCH).to(idle));
+
+        // Skill
+        fsm.addTransition(from(idle).when(Event.SKILL).to(casting));
+        fsm.addTransition(from(walking).when(Event.SKILL).to(casting));
+        fsm.addTransition(from(crouch).when(Event.SKILL).to(casting));
+        fsm.addTransition(from(attacking).when(Event.SKILL).to(casting));
+        fsm.addTransition(from(kicking).when(Event.SKILL).to(casting));
+
     }
 
     public void attack() {
         fsm.trigger(ATTACK);
+    }
+
+    public void kick() {
+        fsm.trigger(KICK);
     }
 
     public int getDamage() {
@@ -94,11 +98,38 @@ public class Knight extends HealthPointSprite {
         }
     }
 
+    public void triggerWalk() {
+        if (!directions.isEmpty()) {
+            fsm.trigger(WALK);
+        }
+    }
+
+    public void jump() {
+        fsm.trigger(JUMP);
+    }
+
+    public void crouch() {
+        fsm.trigger(CRUOCH);
+    }
+
+    public void stopCrouch() {
+        fsm.trigger(STOP_CROUCH);
+        triggerWalk();
+    }
+
     public void stop(Direction direction) {
         directions.remove(direction);
         if (directions.isEmpty()) {
             fsm.trigger(STOP);
         }
+    }
+
+    public void skill(int id) {
+        fsm.trigger(SKILL);
+    }
+
+    public void triggerSpell() {
+        spell.done();
     }
 
     public void update() {
@@ -122,17 +153,26 @@ public class Knight extends HealthPointSprite {
 
     @Override
     public Rectangle getRange() {
-        return new Rectangle(location, shape.size);
+        if (!fsm.currentState().toString().equals("Crouch"))
+            return new Rectangle(location, shape.size);
+        else
+            return new Rectangle(location, crouchShape.size);
     }
 
     @Override
     public Dimension getBodyOffset() {
-        return shape.bodyOffset;
+        if (!fsm.currentState().toString().equals("Crouch"))
+            return shape.bodyOffset;
+        else
+            return crouchShape.bodyOffset;
     }
 
     @Override
     public Dimension getBodySize() {
-        return shape.bodySize;
+        if (!fsm.currentState().toString().equals("Crouch"))
+            return shape.bodySize;
+        else
+            return crouchShape.bodySize;
     }
 
 }
