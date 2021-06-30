@@ -19,13 +19,13 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
 import static characters.knight.Knight.Event.*;
 
 public class Emily extends Knight {
-
+        public static final int DAMAGE = 100;
         public static final String AUDIO_CAST = "emily-cast";
         public static final String AUDIO_INJURED = "emily-injured";
         public static final String AUDIO_DEAD = "emily-dead";
 
-        public Emily(int damage, Point location, Direction face) {
-                super(damage, location, face);
+        public Emily(Point location, Direction face) {
+                super(DAMAGE, location, face);
                 SpriteShape shape = new SpriteShape(new Dimension(World.MULTIPLY * 146, World.MULTIPLY * 176),
                                 new Dimension(World.MULTIPLY * 33, World.MULTIPLY * 38),
                                 new Dimension(World.MULTIPLY * 66, World.MULTIPLY * 135));

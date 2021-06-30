@@ -4,6 +4,7 @@ import fsm.ImageRenderer;
 import fsm.ImageState;
 import model.Direction;
 import model.HealthPointSprite;
+import model.World;
 
 import java.awt.*;
 import java.util.List;
@@ -27,7 +28,9 @@ public class SkillImageRenderer implements ImageRenderer {
         } else {
             g.drawImage(image, range.x, range.y, range.width, range.height, null);
         }
-        g.setColor(Color.RED);
-        g.drawRect(body.x, body.y, body.width, body.height);
+        if (World.SHOW_BOX) {
+            g.setColor(Color.RED);
+            g.drawRect(body.x, body.y, body.width, body.height);
+        }
     }
 }

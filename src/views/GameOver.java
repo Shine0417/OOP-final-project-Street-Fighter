@@ -100,40 +100,4 @@ public class GameOver extends JPanel {
         add(exit, c);
     }
 
-    private JLabel getKnightIcon(String filepath, List<Knight> team, Integer teamNum) {
-        try {
-            String iconPath = "assets/character/" + filepath + "/icon/" + teamNum.toString() + ".png";
-            String disalbledIconPath = "assets/character/" + filepath + "/icon/" + teamNum.toString() + "-disabled.png";
-
-            JLabel label = new JLabel(new ImageIcon(new File(iconPath).toURI().toURL()));
-            label.setDisabledIcon(new ImageIcon(new File(disalbledIconPath).toURI().toURL()));
-            label.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    Point knightLocation = (teamNum == 1) ? new Point(300, 300) : new Point(700, 300);
-                    Direction direction = (teamNum == 1) ? Direction.RIGHT : Direction.LEFT;
-
-                    System.out.println("Team " + teamNum + " selects: " + filepath);
-                    if (filepath.equals("emily")
-                            && team.stream().noneMatch(knight -> knight.toString().equals("Emily"))) {
-                        Knight emily = new Emily(100, knightLocation, direction);
-                        team.add(emily);
-                        emily.setTeam(teamNum);
-                        e.getComponent().setEnabled(false);
-                    } else if (filepath.equals("gray")
-                            && team.stream().noneMatch(knight -> knight.toString().equals("Gray"))) {
-                        Knight gray = new Gray(100, knightLocation, direction);
-                        team.add(gray);
-                        gray.setTeam(teamNum);
-                        e.getComponent().setEnabled(false);
-                    }
-                }
-            });
-            return label;
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        return null;
-
-    }
-
 }

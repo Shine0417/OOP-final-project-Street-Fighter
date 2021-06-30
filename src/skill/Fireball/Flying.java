@@ -30,8 +30,10 @@ public class Flying extends CyclicSequence {
     public void render(Graphics g) {
         super.render(g);
         Rectangle damageArea = damageArea();
-        g.setColor(Color.BLUE);
-        g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
+        if (World.SHOW_BOX) {
+            g.setColor(Color.BLUE);
+            g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
+        }
     }
 
     protected void effectDamage() {

@@ -22,6 +22,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import java.awt.*;
+import java.awt.event.*;
 public class Canvas extends JPanel implements GameLoop.View {
     public static final int P1 = 1;
     public static final int P2 = 2;
@@ -83,6 +85,17 @@ public class Canvas extends JPanel implements GameLoop.View {
         });
 
         addKeyListener();
+
+
+        JButton toggleBox = new JButton("Box");
+        toggleBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                world.SHOW_BOX = !World.SHOW_BOX;
+                requestFocus();
+            }
+        });
+        add(toggleBox);
 
     }
 

@@ -2,6 +2,7 @@ package characters.knight;
 
 import fsm.ImageRenderer;
 import model.Direction;
+import model.World;
 
 import java.awt.*;
 
@@ -25,7 +26,9 @@ public class KnightImageRenderer implements ImageRenderer {
         } else {
             g.drawImage(image, range.x, range.y, range.width, range.height, null);
         }
-         g.setColor(Color.RED);
-         g.drawRect(body.x, body.y, body.width, body.height);
+        if (World.SHOW_BOX) {
+            g.setColor(Color.RED);
+            g.drawRect(body.x, body.y, body.width, body.height);
+        }
     }
 }

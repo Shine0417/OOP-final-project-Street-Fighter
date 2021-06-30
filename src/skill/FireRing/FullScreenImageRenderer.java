@@ -4,6 +4,7 @@ import fsm.ImageRenderer;
 import fsm.ImageState;
 import model.Direction;
 import model.HealthPointSprite;
+import model.World;
 
 import java.awt.*;
 import java.util.List;
@@ -22,10 +23,12 @@ public class FullScreenImageRenderer implements ImageRenderer {
         Direction face = knight.getFace();
         Rectangle range = knight.getRange();
         Rectangle body = knight.getBody();
-        g.drawImage(image, (int) (range.x - range.width * 7/2), (int) (range.y+body.getHeight()), range.width * 8,
+        g.drawImage(image, (int) (range.x - range.width * 7 / 2), (int) (range.y + body.getHeight()), range.width * 8,
                 range.height, null);
 
-        g.setColor(Color.RED);
-        g.drawRect(body.x, body.y, body.width, body.height);
+        if (World.SHOW_BOX) {
+            g.setColor(Color.RED);
+            g.drawRect(body.x, body.y, body.width, body.height);
+        }
     }
 }

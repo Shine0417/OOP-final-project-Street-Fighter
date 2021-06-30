@@ -17,13 +17,13 @@ import skill.Fireball.Fireball;
 import static utils.ImageStateUtils.imageStatesFromFolder;
 
 public class Gray extends Knight {
-
+        public static final int DAMAGE = 80;
         public static final String AUDIO_CAST = "gray-cast";
         public static final String AUDIO_INJURED = "gray-injured";
         public static final String AUDIO_DEAD = "gray-dead";
 
-        public Gray(int damage, Point location, Direction face) {
-                super(damage, location, face);
+        public Gray(Point location, Direction face) {
+                super(DAMAGE, location, face);
                 SpriteShape shape = new SpriteShape(new Dimension(World.MULTIPLY * 146, World.MULTIPLY * 176),
                                 new Dimension(World.MULTIPLY * 33, World.MULTIPLY * 38),
                                 new Dimension(World.MULTIPLY * 66, World.MULTIPLY * 135));
@@ -50,7 +50,7 @@ public class Gray extends Knight {
                                 new Idle(imageStatesFromFolder(filepath.concat("idle"), imageRenderer)));
                 State walking = new WaitingPerFrame(2,
                                 new Walking(this, imageStatesFromFolder(filepath.concat("walking"), imageRenderer)));
-                State attacking = new WaitingPerFrame(3, new GrayAttacking(this, fsm,
+                State attacking = new WaitingPerFrame(6, new GrayAttacking(this, fsm,
                                 imageStatesFromFolder(filepath.concat("attack"), imageRenderer)));
                 State jumping = new WaitingPerFrame(4, new Jumping(this, fsm,
                                 imageStatesFromFolder(filepath.concat("jumping"), imageRenderer)));
