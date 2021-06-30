@@ -3,6 +3,7 @@ package characters.emily;
 import fsm.State;
 import fsm.StateMachine;
 import media.AudioPlayer;
+import model.World;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -30,7 +31,7 @@ public class EmilyAttacking extends Attacking {
 
     @Override
     protected Rectangle damageArea() {
-        return knight.getArea(new Dimension(80, 15), // box offset x, y
-                new Dimension(60, 150));// box width, box height
+        return knight.getArea(new Dimension(World.MULTIPLY * 80, World.MULTIPLY * 15), // box offset x, y
+                new Dimension(World.MULTIPLY * 60, World.MULTIPLY * 150));// box width, box height
     }
 }

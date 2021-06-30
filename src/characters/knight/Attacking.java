@@ -54,7 +54,7 @@ public class Attacking extends Sequence {
         var sprites = world.getSprites(damageArea);
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
-            if (knight.getTeam() != sprite.getTeam()){               
+            if (knight.getTeam() != sprite.getTeam()) {
                 sprite.onDamaged(damageArea, knight.getDamage());
                 hasClash = true;
             }
@@ -67,8 +67,8 @@ public class Attacking extends Sequence {
     }
 
     protected Rectangle damageArea() {
-        return knight.getArea(new Dimension(87, 70), // box offset x, y
-                new Dimension(55, 88));// box width, box height
+        return knight.getArea(new Dimension(World.MULTIPLY * 87, World.MULTIPLY * 70), // box offset x, y
+                new Dimension(World.MULTIPLY * 55, World.MULTIPLY * 88));// box width, box height
     }
 
     @Override

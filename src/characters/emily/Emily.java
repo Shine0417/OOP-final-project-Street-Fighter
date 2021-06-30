@@ -9,6 +9,7 @@ import fsm.State;
 import fsm.WaitingPerFrame;
 import model.Direction;
 import model.SpriteShape;
+import model.World;
 import skill.IceWall.IceWall;
 import skill.Lightning.Lightning;
 import skill.LightningBolt.LightningBolt;
@@ -24,9 +25,12 @@ public class Emily extends Knight {
 
     public Emily(int damage, Point location, Direction face) {
         super(damage, location, face);
-        SpriteShape shape = new SpriteShape(new Dimension(146, 176), new Dimension(33, 38), new Dimension(66, 135));
-        SpriteShape crouchShape = new SpriteShape(new Dimension(146, 176), new Dimension(33, 88),
-                new Dimension(66, 65));
+        SpriteShape shape = new SpriteShape(new Dimension(World.MULTIPLY * 146, World.MULTIPLY *176),
+                        new Dimension(World.MULTIPLY * 33, World.MULTIPLY * 38),
+                        new Dimension(World.MULTIPLY * 66, World.MULTIPLY * 135));
+        SpriteShape crouchShape = new SpriteShape(new Dimension(World.MULTIPLY * 146, World.MULTIPLY *176),
+                        new Dimension(World.MULTIPLY * 33, World.MULTIPLY * 88),
+                        new Dimension(World.MULTIPLY * 66, World.MULTIPLY * 65));
 
         this.shape = shape;
         this.fsm = createTransitionTable();
@@ -68,7 +72,8 @@ public class Emily extends Knight {
 
     @Override
     public void skill(int id) {
-        super.skill(id);
+        if (fsm.currentState().toString().equals("Skill"))
+                return;
         switch (id) {
             case 1:
                 spell = new LightningBolt(this, 1);
@@ -82,5 +87,10 @@ public class Emily extends Knight {
         }
         spell.setTeam(getTeam());
         world.addSprite(spell);
+        super.skill(id);
+    }
+
+    public String toString(){
+            return "Emily";
     }
 }

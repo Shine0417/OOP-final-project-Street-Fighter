@@ -8,6 +8,7 @@ import fsm.WaitingPerFrame;
 import model.Direction;
 import model.HealthPointSprite;
 import model.SpriteShape;
+import model.World;
 import skill.ImageRenderer.SkillImageRenderer;
 
 import static fsm.FiniteStateMachine.Transition.from;
@@ -18,7 +19,9 @@ public class Fireball extends HealthPointSprite {
     public int FIREBALL_HP;
     private Direction direction;
     private Knight caster;
-    protected SpriteShape shape;
+    protected SpriteShape shape = new SpriteShape(new Dimension(World.MULTIPLY * 146, World.MULTIPLY * 176),
+    new Dimension(World.MULTIPLY * 86, World.MULTIPLY * 60),
+    new Dimension(World.MULTIPLY * 36, World.MULTIPLY * 55));
     protected FiniteStateMachine fsm;
     protected int damage;
 
@@ -37,7 +40,6 @@ public class Fireball extends HealthPointSprite {
     }
 
     protected void init() {
-        this.shape = new SpriteShape(new Dimension(146, 176), new Dimension(86, 60), new Dimension(36, 55));
 
         this.damage = 200;
 

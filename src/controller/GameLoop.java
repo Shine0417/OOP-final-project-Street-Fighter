@@ -8,13 +8,17 @@ import model.World;
 public abstract class GameLoop {
     private boolean running;
     private View view;
+    private Thread thread;
 
     public void setView(View view) {
         this.view = view;
     }
-
+    public View getView() {
+        return view;
+    }
     public void start() {
-        new Thread(this::gameLoop).start();
+        thread = new Thread(this::gameLoop);
+        thread.start();
     }
 
     private void gameLoop() {
@@ -31,6 +35,7 @@ public abstract class GameLoop {
 
     public void stop() {
         running = false;
+        thread.interrupt();
     }
 
     private void delay(long ms) {

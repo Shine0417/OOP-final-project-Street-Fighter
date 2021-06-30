@@ -11,13 +11,13 @@ public enum Direction {
     public Dimension translate() {
         switch (this) {
             case UP:
-                return new Dimension(0, -6);
+                return new Dimension(0, -World.MULTIPLY * 6);
             case DOWN:
-                return new Dimension(0, 6);
+                return new Dimension(0, World.MULTIPLY * 6);
             case LEFT:
-                return new Dimension(-6, 0);
+                return new Dimension(-World.MULTIPLY * 6, 0);
             case RIGHT:
-                return new Dimension(6, 0);
+                return new Dimension(World.MULTIPLY * 6, 0);
             default:
                 throw new IllegalStateException("Impossible");
         }

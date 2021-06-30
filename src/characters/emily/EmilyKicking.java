@@ -2,6 +2,7 @@ package characters.emily;
 
 import fsm.State;
 import fsm.StateMachine;
+import model.World;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import characters.knight.Knight;
 import characters.knight.Attacking;
+
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
@@ -22,6 +24,7 @@ public class EmilyKicking extends Attacking {
     private void init() {
         damagingStateNumbers = new HashSet<>(List.of(2));
     }
+
     @Override
     public void update() {
         if (knight.isAlive()) {
@@ -34,7 +37,7 @@ public class EmilyKicking extends Attacking {
 
     @Override
     protected Rectangle damageArea() {
-        return knight.getArea(new Dimension(-20, 110), // box offset x, y
-                new Dimension(170, 80));// box width, box height
+        return knight.getArea(new Dimension(-World.MULTIPLY * 20, World.MULTIPLY * 110), // box offset x, y
+                new Dimension(World.MULTIPLY * 170, World.MULTIPLY * 80));// box width, box height
     }
 }

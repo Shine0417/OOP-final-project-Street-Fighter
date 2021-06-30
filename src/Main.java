@@ -1,4 +1,5 @@
 import controller.Game;
+import media.AudioPlayer;
 import model.Direction;
 import model.HealthPointSprite;
 import model.World;
@@ -6,6 +7,12 @@ import skill.Fireball.Flying;
 import skill.IceWall.IceWallFlying;
 import skill.Lightning.LightningFlying;
 import views.GameView;
+import views.Intro;
+import views.StageMenu;
+import views.CharacterMenu;
+import views.GameOver;
+
+import java.awt.event.*;
 
 import java.awt.*;
 import java.io.File;
@@ -22,6 +29,10 @@ import characters.knight.KnightCollisionHandler;
 import characters.knight.Walking;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import views.Canvas;
 import static media.AudioPlayer.addAudioByFilePath;
 
 /**
@@ -31,47 +42,47 @@ import static media.AudioPlayer.addAudioByFilePath;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Main {
+    public static JPanel cards;
+    public static CardLayout layout;
+    final static String INTRO_PANEL = "Card with Intro panel";
+    final static String CHACRACTER_MENU_PANEL = "Card with Character Selection panel";
+    final static String STAGE_MENU_PANEL = "Card with Stage Selection panel";
+    final static String GAME_PANEL = "Card with GamePlay panel";
+    final static String GAME_OVER_PANEL = "Card with GameOver panel";
+    
+    public static String background_path = "assets/background/intro/1.jpg";
+
     public static void main(String[] args) {
         addAudio();
+        Thread musicThread = AudioPlayer.playLoopMusic("assets/music/background.wav");
+        GameView view = new GameView(); // view
 
-        startIntro();
+        cards = new JPanel();
+        layout = new CardLayout();
+        cards.setLayout(layout);
 
+        // TODO Intro Panel
+        Intro intro = new Intro(cards);
+
+        // TODO Knight Selection Panel
         List<Knight> team1 = new ArrayList<>();
         List<Knight> team2 = new ArrayList<>();
 
-        startMenu(team1, team2);
+        Canvas canvas = new Canvas(cards, view, team1, team2, background_path);
+        CharacterMenu characterMenu = new CharacterMenu(cards, team1, team2);
+        StageMenu stageMenu = new StageMenu(cards, canvas);
 
-        startGame(team1, team2, 0);
-    }
-    // Start Introduction Page
-    private static void startIntro() {
-    }
+        GameOver gameOver = new GameOver(cards);
 
-    //Start Knights Selection Page
-    private static void startMenu(List<Knight> team1, List<Knight> team2) {
-        // initialization procedure
-        Knight p1 = new Gray(100, new Point(300, 300), Direction.RIGHT);
-        Knight p3 = new Emily(100, new Point(300, 300), Direction.RIGHT);
-        team1.add(p1);
-        team1.add(p3);
-        p1.setTeam(1);
-        p3.setTeam(1);
+        // Main Card Layout
+        cards.add(intro, INTRO_PANEL);
+        cards.add(characterMenu, CHACRACTER_MENU_PANEL);
+        cards.add(stageMenu, STAGE_MENU_PANEL);
+        cards.add(canvas, GAME_PANEL);
+        cards.add(gameOver, GAME_OVER_PANEL);
 
-        Knight p2 = new Emily(150, new Point(700, 300), Direction.LEFT);
-        Knight p4 = new Gray(150, new Point(700, 300), Direction.LEFT);
-        team2.add(p2);
-        team2.add(p4);
-        p2.setTeam(2);
-        p4.setTeam(2);
-    }
-
-    // Start Game
-    private static void startGame(List<Knight> team1, List<Knight> team2, int first_rival_id) {
-        World world = new World(new KnightCollisionHandler(), team1.get(first_rival_id), team2.get(first_rival_id)); // model
-        Game game = new Game(world, team1, team2, first_rival_id); // controller
-        GameView view = new GameView(game); // view
-        game.start(); // run the game and the game loop
-        view.launch(); // launch the GUI
+        view.add(cards, BorderLayout.CENTER);
+        view.setVisible(true);
     }
 
     private static void addAudio() {

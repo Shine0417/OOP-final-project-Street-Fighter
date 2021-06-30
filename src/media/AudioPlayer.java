@@ -31,4 +31,10 @@ public class AudioPlayer {
         }
     }
 
+    public static Thread playLoopMusic(String filepath){
+        Thread musicThread= new Thread(new MusicPlayer(filepath));
+        musicThread.start();
+        return musicThread;
+    }
+
 }

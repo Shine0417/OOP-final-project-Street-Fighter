@@ -6,9 +6,6 @@ import model.Direction;
 import model.HealthPointSprite;
 
 import java.awt.*;
-import java.util.List;
-
-import characters.knight.Knight;
 
 public class LongSkillImageRenderer implements ImageRenderer {
     protected HealthPointSprite knight;

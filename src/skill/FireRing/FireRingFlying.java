@@ -49,12 +49,12 @@ public class FireRingFlying extends Flying {
 
     protected Rectangle damageArea() {
         Rectangle rec = new Rectangle();
-        if(currentPosition < 10)
-            rec.width = spell.getBody().width + 90 * currentPosition;
+        if (currentPosition < 10)
+            rec.width = spell.getBody().width + World.MULTIPLY * 90 * currentPosition;
         else
-            rec.width = spell.getBody().width + 90 * (9+currentPosition/9);
+            rec.width = spell.getBody().width + World.MULTIPLY * 90 * (9 + currentPosition / 9);
 
-        rec.height = spell.getBody().height/2;
+        rec.height = spell.getBody().height / 2;
         rec.x = (int) spell.getLocation().getX() + spell.getBodySize().width * 3 / 2 - rec.width / 2;
         rec.y = (int) spell.getLocation().getY() + spell.getBodySize().height + rec.height * 3;
 

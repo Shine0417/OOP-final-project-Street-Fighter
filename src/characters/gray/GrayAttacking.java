@@ -2,6 +2,7 @@ package characters.gray;
 
 import fsm.State;
 import fsm.StateMachine;
+import model.World;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -29,7 +30,7 @@ public class GrayAttacking extends Attacking {
 
     @Override
     protected Rectangle damageArea() {
-        return knight.getArea(new Dimension(80, 65), // box offset x, y
-                new Dimension(60, 40));// box width, box height
+        return knight.getArea(new Dimension(World.MULTIPLY * 80, World.MULTIPLY * 65), // box offset x, y
+                new Dimension(World.MULTIPLY * 60, World.MULTIPLY * 40));// box width, box height
     }
 }

@@ -1,6 +1,5 @@
 package skill.Fireball;
 
-import java.awt.Dimension;
 import java.util.List;
 
 import fsm.CyclicSequence;

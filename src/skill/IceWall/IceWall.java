@@ -5,7 +5,6 @@ import fsm.State;
 import fsm.WaitingPerFrame;
 import skill.Fireball.Casting;
 import skill.Fireball.Fireball;
-import skill.Fireball.Flying;
 import skill.Fireball.Triggered;
 import skill.ImageRenderer.SkillImageRenderer;
 
@@ -26,8 +25,6 @@ public class IceWall extends Fireball {
 
     @Override
     protected void init() {
-        this.shape = new SpriteShape(new Dimension(146, 176), new Dimension(66, 60), new Dimension(36, 55));
-
         this.damage = 200;
 
         String filepath = "assets/skill/iceWall/";
