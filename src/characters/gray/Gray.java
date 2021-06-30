@@ -78,13 +78,29 @@ public class Gray extends Knight {
                         return;
                 switch (id) {
                         case 1:
-                                spell = new Fireball(this, 1);
+                                if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
+                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        spell = new Fireball(this, 1);
+                                } else {
+                                        return;
+                                }
                                 break;
                         case 2:
-                                spell = new Fire(this, 1);
+                                if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
+                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        spell = new Fire(this, 1);
+                                } else {
+                                        return;
+                                }
                                 break;
                         case 3:
-                                spell = new FireRing(this, 1);
+                                if (mpBar.getHp() >= Fireball.FIREBALL_MP && upBar.max()) {
+                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        upBar.setHp(0);
+                                        spell = new FireRing(this, 1);
+                                } else {
+                                        return;
+                                }
                                 break;
                 }
                 spell.setTeam(getTeam());

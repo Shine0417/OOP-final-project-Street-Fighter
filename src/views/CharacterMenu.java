@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.awt.AlphaComposite;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -17,6 +18,12 @@ import characters.emily.Emily;
 import characters.gray.Gray;
 import characters.knight.Knight;
 import model.Direction;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.Composite;
+import java.io.File;
+import java.io.IOException;
 
 import java.awt.event.*;
 
@@ -41,11 +48,12 @@ public class CharacterMenu extends JPanel {
 
         setSize(GameView.WIDTH, GameView.HEIGHT);
         setBackground(Color.blue);
-
+        
         JLabel title = new JLabel("SELECT PLAY"); // title
         title.setForeground(Color.black);
         title.setFont(new Font("Times New Roman", Font.BOLD, 52));
-
+       
+        
         add(title, c);
         c.gridx = 0;
         c.gridy = 2;
@@ -54,7 +62,7 @@ public class CharacterMenu extends JPanel {
         c.weightx = 0;
         c.weighty = 1;
         c.fill = GridBagConstraints.NONE;
-
+        
         JButton emily1 = getKnightIcon("emily", team1, 1);
         add(emily1, c);
         
@@ -124,7 +132,7 @@ public class CharacterMenu extends JPanel {
             }
         });
         next.setEnabled(false);
-        next.setBounds(60,400,60,40);
+        next.setBounds(60,400,70,40);
         add(next, c);
 
     }

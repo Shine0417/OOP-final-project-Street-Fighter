@@ -5,21 +5,26 @@ import java.awt.*;
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class MagicPointBar extends HealthPointBar {
-    private int mp_to_add = 5;
+public class UltimatePointBar extends HealthPointBar {
+    private int up_to_add = 50;
 
-    public MagicPointBar(int mp) {
-        super(mp);
-
+    public UltimatePointBar(int up) {
+        super(up);
+        this.hp = 0;
     }
 
-    public void setMp(int mp) {
-        setHp(mp);
+    public void setUp(int up) {
+        setHp(up);
     }
 
-    public void addMp() {
-        if (hp + mp_to_add < maxHp) {
-            setHp(hp + mp_to_add);
+    public boolean max(){
+        return hp == maxHp;
+    }
+
+
+    public void addUp() {
+        if (hp + up_to_add < maxHp) {
+            setHp(hp + up_to_add);
         } else {
             setHp(maxHp);
         }
@@ -31,7 +36,7 @@ public class MagicPointBar extends HealthPointBar {
         int width = (int) (hp * range.width / maxHp);
         g.setColor(Color.gray);
         g.fillRect(range.x, range.y, range.width, range.height);
-        g.setColor(Color.BLUE);
+        g.setColor(Color.cyan);
 
         if (owner.getTeam() == 0)
             g.fillRect(range.x, range.y, width, range.height);
@@ -41,12 +46,10 @@ public class MagicPointBar extends HealthPointBar {
 
     @Override
     public Rectangle getRange() {
-        // return new Rectangle(owner.getX(), owner.getY() - 30, (int)
-        // owner.getRange().getWidth(), 10);
         if (owner.getTeam() == 1) {
-            return new Rectangle(10, 35, 425, 15);
+            return new Rectangle(10, 60, 400, 15);
         } else {
-            return new Rectangle(865, 35, 425, 15);
+            return new Rectangle(890, 60, 400, 15);
         }
 
     }

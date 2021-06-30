@@ -4,7 +4,7 @@ import fsm.FiniteStateMachine;
 import fsm.State;
 import media.AudioPlayer;
 import model.Direction;
-import model.MagicPointSprite;
+import model.UltimatePointSprite;
 import model.SpriteShape;
 import skill.Fireball.Fireball;
 
@@ -20,9 +20,10 @@ import static fsm.FiniteStateMachine.Transition.from;
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class Knight extends MagicPointSprite {
+public class Knight extends UltimatePointSprite {
     public static final int KNIGHT_HP = 500;
     public static final int KNIGHT_MP = 200;
+    public static final int KNIGHT_UP = 200;
     public String AUDIO_INJURED;
     public String AUDIO_DEAD;
 
@@ -40,7 +41,7 @@ public class Knight extends MagicPointSprite {
     }
 
     public Knight(int damage, Point location, Direction face) {
-        super(KNIGHT_HP, KNIGHT_MP);
+        super(KNIGHT_HP, KNIGHT_MP,KNIGHT_UP);
         this.face = face;
         this.damage = damage;
         this.location = location;
@@ -93,6 +94,10 @@ public class Knight extends MagicPointSprite {
         fsm.addTransition(from(casting).when(Event.DEAD).to(dead));
         fsm.addTransition(from(injured).when(Event.DEAD).to(dead));
         // fsm.addTransition(from(jumping).when(Event.DEAD).to(dead)); TODO add jump-> change hero, injured
+    }
+
+    public void addUp() {
+        upBar.addUp();
     }
 
     public void attack() {
@@ -152,6 +157,7 @@ public class Knight extends MagicPointSprite {
     }
 
     public void update() {
+        super.update();
         fsm.update();
     }
 

@@ -17,11 +17,12 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
 
 public class Fireball extends HealthPointSprite {
     public int FIREBALL_HP;
+    public static int FIREBALL_MP = 100;
     private Direction direction;
     private Knight caster;
     protected SpriteShape shape = new SpriteShape(new Dimension(World.MULTIPLY * 146, World.MULTIPLY * 176),
-    new Dimension(World.MULTIPLY * 86, World.MULTIPLY * 60),
-    new Dimension(World.MULTIPLY * 36, World.MULTIPLY * 55));
+            new Dimension(World.MULTIPLY * 86, World.MULTIPLY * 60),
+            new Dimension(World.MULTIPLY * 36, World.MULTIPLY * 55));
     protected FiniteStateMachine fsm;
     protected int damage;
 

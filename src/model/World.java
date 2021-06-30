@@ -21,6 +21,8 @@ public class World {
     private final int BOUNDDRY_X = 1200;
     private static final int BOUNDDRY_Y = 1000;
     public final static int MULTIPLY = 2;
+
+
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
     public static int count_p1 = 2;

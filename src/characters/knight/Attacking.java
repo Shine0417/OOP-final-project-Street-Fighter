@@ -55,7 +55,9 @@ public class Attacking extends Sequence {
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
             if (knight.getTeam() != sprite.getTeam()) {
+                knight.addUp();
                 sprite.onDamaged(damageArea, knight.getDamage());
+
                 hasClash = true;
             }
         }
