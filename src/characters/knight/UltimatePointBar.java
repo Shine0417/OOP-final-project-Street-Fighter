@@ -38,7 +38,7 @@ public class UltimatePointBar extends HealthPointBar {
         g.fillRect(range.x, range.y, range.width, range.height);
         g.setColor(Color.cyan);
 
-        if (owner.getTeam() == 0)
+        if (owner.getTeam() == 1)
             g.fillRect(range.x, range.y, width, range.height);
         else
             g.fillRect(range.x + range.width - width, range.y, width, range.height);
