@@ -142,18 +142,18 @@ public class CharacterMenu extends JPanel {
 
             @Override
             public void componentShown(ComponentEvent evt) {
-                requestFocus();
+                requestFocusInWindow();
                 team1.clear();
                 team2.clear();
                 emily1.setEnabled(false);
                 gray1.setEnabled(false);
                 alita1.setEnabled(false);
-                alita1.setEnabled(false);
+                nazi1.setEnabled(false);
 
                 emily2.setEnabled(false);
                 gray2.setEnabled(false);
                 nazi2.setEnabled(false);
-                nazi2.setEnabled(false);
+                alita2.setEnabled(false);
                 reRender();
             }
         });
