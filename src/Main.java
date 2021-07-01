@@ -29,6 +29,7 @@ import characters.knight.KnightCollisionHandler;
 import characters.knight.Walking;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -49,12 +50,14 @@ public class Main {
     final static String STAGE_MENU_PANEL = "Card with Stage Selection panel";
     final static String GAME_PANEL = "Card with GamePlay panel";
     final static String GAME_OVER_PANEL = "Card with GameOver panel";
+    private static final String AUDIO_CLICK = "click JButton";
     
     public static String background_path = "assets/background/intro/1.jpg";
 
     public static void main(String[] args) {
         addAudio();
         Thread musicThread = AudioPlayer.playLoopMusic("assets/music/background.wav");
+
         GameView view = new GameView(); // view
 
         cards = new JPanel();
@@ -80,9 +83,49 @@ public class Main {
         cards.add(stageMenu, STAGE_MENU_PANEL);
         cards.add(canvas, GAME_PANEL);
         cards.add(gameOver, GAME_OVER_PANEL);
+        for(int i = 0; i < intro.getComponentCount(); i++){
+            Component child = intro.getComponent(i);
+            if(child instanceof JButton){
+                ((AbstractButton) child).addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        AudioPlayer.playSounds(AUDIO_CLICK);
+                    }
+                });
+            }
+        }for(int i = 0; i < characterMenu.getComponentCount(); i++){
+            Component child = characterMenu.getComponent(i);
+            if(child instanceof JButton){
+                ((AbstractButton) child).addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        AudioPlayer.playSounds(AUDIO_CLICK);
+                    }
+                });
+            }
+        }for(int i = 0; i < stageMenu.getComponentCount(); i++){
+            Component child = stageMenu.getComponent(i);
+            if(child instanceof JButton){
+                ((AbstractButton) child).addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        AudioPlayer.playSounds(AUDIO_CLICK);
+                        System.out.println("click");
+                    }
+                });
+            }
+        }
+        for(int i = 0; i < gameOver.getComponentCount(); i++){
+            Component child = gameOver.getComponent(i);
+            if(child instanceof JButton){
+                ((AbstractButton) child).addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        AudioPlayer.playSounds(AUDIO_CLICK);
+                    }
+                });
+            }
+        }
 
         view.add(cards, BorderLayout.CENTER);
         view.setVisible(true);
+        intro.requestFocus();
     }
 
     private static void addAudio() {
@@ -101,6 +144,8 @@ public class Main {
         addAudioByFilePath(Flying.AUDIO_FIREBALL_HIT, new File("assets/skill/fireball/audio/trigger.wav"));
         addAudioByFilePath(IceWallFlying.AUDIO_ICEWALL_HIT, new File("assets/skill/iceWall/audio/trigger.wav"));
         addAudioByFilePath(LightningFlying.AUDIO_LIGHTNING_FLY, new File("assets/skill/lightning/audio/flying.wav"));
+
+        addAudioByFilePath(Main.AUDIO_CLICK, new File("assets/music/click.wav"));
 
     }
 }

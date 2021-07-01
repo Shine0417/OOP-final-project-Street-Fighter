@@ -21,8 +21,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import media.AudioPlayer;
 
-import java.awt.*;
 import java.awt.event.*;
 public class Canvas extends JPanel implements GameLoop.View {
     public static final int P1 = 1;
@@ -91,6 +91,7 @@ public class Canvas extends JPanel implements GameLoop.View {
         toggleBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AudioPlayer.playSounds("click JButton");
                 world.SHOW_BOX = !World.SHOW_BOX;
                 requestFocus();
             }
