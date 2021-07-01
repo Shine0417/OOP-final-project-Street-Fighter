@@ -35,9 +35,9 @@ public class CharacterMenu extends JPanel {
         this.team2 = team2;
         super.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 4;
+        c.gridx = 0;
         c.gridy = 1;
-        c.gridwidth = 1;
+        c.gridwidth = 9;
         c.gridheight = 1;
         c.weightx = 0;
         c.weighty = 0;
@@ -252,8 +252,8 @@ public class CharacterMenu extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if (team1 == null || team2 == null || team1.isEmpty() && team2.isEmpty())
             return;
         g.setFont(new Font("Verdana", Font.BOLD + Font.ITALIC, 35));
