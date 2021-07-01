@@ -12,10 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import characters.emily.Emily;
-import characters.gray.Gray;
-import characters.knight.Knight;
-import model.Direction;
+import media.AudioPlayer;
 
 import java.awt.event.*;
 
@@ -78,6 +75,7 @@ public class GameOver extends JPanel {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AudioPlayer.playSounds("click JButton");
                 ((CardLayout) parent.getLayout()).show(cards, "Card with Character Selection panel");
             }
         });
@@ -94,6 +92,7 @@ public class GameOver extends JPanel {
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AudioPlayer.playSounds("click JButton");
                 ((CardLayout) parent.getLayout()).show(cards, "Card with Intro panel");
             }
         });

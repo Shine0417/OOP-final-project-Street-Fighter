@@ -21,9 +21,9 @@ import static characters.knight.Knight.Event.*;
 
 public class Nazi extends Knight {
         public static final int DAMAGE = 90;
-        public static final String AUDIO_CAST = "emily-cast";
-        public static final String AUDIO_INJURED = "emily-injured";
-        public static final String AUDIO_DEAD = "emily-dead";
+        public static final String AUDIO_CAST = "gray-cast";
+        public static final String AUDIO_INJURED = "gray-injured";
+        public static final String AUDIO_DEAD = "gray-dead";
 
         public Nazi(Point location, Direction face) {
                 super(DAMAGE, location, face);

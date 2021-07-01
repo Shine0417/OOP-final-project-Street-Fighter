@@ -20,6 +20,7 @@ import characters.gray.Gray;
 import characters.knight.Knight;
 import characters.nazi.Nazi;
 import model.Direction;
+import media.AudioPlayer;
 
 import java.awt.event.*;
 
@@ -101,20 +102,10 @@ public class CharacterMenu extends JPanel {
         c.weighty = 1;
         c.fill = GridBagConstraints.NONE;
 
-        JButton alita2 = getKnightIcon("alita", team2, 2);
-        add(alita2, c);
+        JButton nazi2 = getKnightIcon("nazi", team2, 2);
+        add(nazi2, c);
 
         c.gridx = 6;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.weightx = 0;
-        c.weighty = 1;
-        c.fill = GridBagConstraints.NONE;
-        JButton gray2 = getKnightIcon("gray", team2, 2);
-        add(gray2, c);
-
-        c.gridx = 7;
         c.gridy = 2;
         c.gridwidth = 1;
         c.gridheight = 1;
@@ -124,6 +115,16 @@ public class CharacterMenu extends JPanel {
         JButton emily2 = getKnightIcon("emily", team2, 2);
         add(emily2, c);
 
+        c.gridx = 7;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.weightx = 0;
+        c.weighty = 1;
+        c.fill = GridBagConstraints.NONE;
+        JButton gray2 = getKnightIcon("gray", team2, 2);
+        add(gray2, c);
+
         c.gridx = 8;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -131,8 +132,8 @@ public class CharacterMenu extends JPanel {
         c.weightx = 0;
         c.weighty = 1;
         c.fill = GridBagConstraints.NONE;
-        JButton nazi2 = getKnightIcon("nazi", team2, 2);
-        add(nazi2, c);
+        JButton alita2 = getKnightIcon("alita", team2, 2);
+        add(alita2, c);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -169,6 +170,7 @@ public class CharacterMenu extends JPanel {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AudioPlayer.playSounds("click JButton");
                 ((CardLayout) parent.getLayout()).next(parent);
             }
         });
@@ -179,28 +181,24 @@ public class CharacterMenu extends JPanel {
     }
 
     private JButton getKnightIcon(String filepath, List<Knight> team, Integer teamNum) {
-        try {
-            String iconPath = "assets/character/" + filepath + "/icon/" + teamNum.toString() + ".png";
-            String disalbledIconPath = "assets/character/" + filepath + "/icon/" + teamNum.toString() + "-disabled.png";
+        String iconPath = "assets/character/" + filepath + "/icon/" + teamNum.toString() + ".png";
+        String disabledIconPath = "assets/character/" + filepath + "/icon/" + teamNum.toString() + "-disabled.png";
 
-            JButton label = new JButton(new ImageIcon(new File(iconPath).toURI().toURL()));
-            label.setDisabledIcon(new ImageIcon(new File(disalbledIconPath).toURI().toURL()));
-            label.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    handleClickKnight(e.getComponent(), team, teamNum, filepath);
-                }
-            });
-            label.setEnabled(false);
-            // label.setBorder(BorderFactory.createEmptyBorder());
-            label.setContentAreaFilled(false);
-            label.setPreferredSize(new Dimension(80, 80));
-            label.setFocusPainted(false);
-            // add(label);
-            return label;
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        return null;
+        JButton label = new JButton(new ImageIcon(getProfileImage(iconPath, 70, 80)));
+        label.setDisabledIcon(new ImageIcon(getProfileImage(disabledIconPath, 70, 80)));
+        label.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                handleClickKnight(e.getComponent(), team, teamNum, filepath);
+            }
+        });
+        label.setEnabled(false);
+        // label.setBorder(BorderFactory.createEmptyBorder());
+        label.setContentAreaFilled(false);
+        label.setPreferredSize(new Dimension(80, 80));
+        label.setFocusPainted(false);
+        
+        // add(label);
+        return label;
 
     }
 
@@ -233,10 +231,9 @@ public class CharacterMenu extends JPanel {
         reRender();
     }
 
-    public Image getProfileImage(String filename) {
+    public Image getProfileImage(String path, int width, int height) {
         try {
-            String Path = "assets/character/" + filename + "/icon/1.png";
-            return ImageIO.read(new File(Path)).getScaledInstance(260, 160, Image.SCALE_SMOOTH);
+            return ImageIO.read(new File(path)).getScaledInstance(width, height, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -259,24 +256,39 @@ public class CharacterMenu extends JPanel {
         g.setFont(new Font("Verdana", Font.BOLD + Font.ITALIC, 35));
         g.setColor(Color.black);
         if (team1.size() > 0) {
-            g.drawImage(getProfileImage(team1.get(0).toString().toLowerCase()), 30, 100, 300, 400, this);
+            drawBorder(30, 100, 300, 400, g);
+            String path = "assets/character/" + team1.get(0).toString().toLowerCase() + "/icon/1.png";
+            g.drawImage(getProfileImage(path, 260, 160), 30, 100, 300, 400, this);
             g.drawString(team1.get(0).toString(), 120, 130);
         }
 
         if (team1.size() > 1) {
-            g.drawImage(getProfileImage(team1.get(1).toString().toLowerCase()), 230, 300, 300, 400, this);
+            drawBorder(230, 300, 300, 400, g);
+            String path = "assets/character/" + team1.get(1).toString().toLowerCase() + "/icon/1.png";
+            g.drawImage(getProfileImage(path, 260, 160), 230, 300, 300, 400, this);
             g.drawString(team1.get(1).toString(), 320, 330);
         }
 
         if (team2.size() > 0) {
-            g.drawImage(getProfileImage(team2.get(0).toString().toLowerCase()), 1280, 100, -300, 400, this);
+            drawBorder(1280, 100, -300, 400, g);
+            String path = "assets/character/" + team2.get(0).toString().toLowerCase() + "/icon/2.png";
+            g.drawImage(getProfileImage(path, 260, 160), 1280, 100, -300, 400, this);
             g.drawString(team2.get(0).toString(), 1070, 130);
         }
 
         if (team2.size() > 1) {
-            g.drawImage(getProfileImage(team2.get(1).toString().toLowerCase()), 1080, 300, -300, 400, this);
+            drawBorder(1080, 300, -300, 400, g);
+            String path = "assets/character/" + team2.get(1).toString().toLowerCase() + "/icon/2.png";
+            g.drawImage(getProfileImage(path, 260, 160), 1080, 300, -300, 400, this);
             g.drawString(team2.get(1).toString(), 870, 330);
         }
 
+    }
+
+    public void drawBorder(int x, int y, int width, int height, Graphics g) {
+        g.drawLine(x, y, x + width, y);
+        g.drawLine(x, y, x, y + height);
+        g.drawLine(x + width, y + height, x + width, y);
+        g.drawLine(x + width, y + height, x, y + height);
     }
 }

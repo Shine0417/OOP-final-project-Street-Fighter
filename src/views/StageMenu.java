@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import java.awt.*;
 import java.awt.event.*;
+import media.AudioPlayer;
 
 public class StageMenu extends JPanel {
     private JPanel parent;
@@ -29,7 +30,7 @@ public class StageMenu extends JPanel {
 
         super.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        
+
         c.gridx = 1;
         c.gridy = 0;
         c.gridwidth = 1;
@@ -81,7 +82,7 @@ public class StageMenu extends JPanel {
         c.weightx = 0;
         c.weighty = 0;
         add(background4, c);
-        
+
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -102,6 +103,7 @@ public class StageMenu extends JPanel {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AudioPlayer.playSounds("click JButton");
                 canvas.startGame(0);
                 ((CardLayout) parent.getLayout()).show(parent, "Card with GamePlay panel");
             }
@@ -140,7 +142,7 @@ public class StageMenu extends JPanel {
 
     protected void setBackgroundImage(String path) {
         try {
-            
+
             image = ImageIO.read(new File(path));
             repaint();
         } catch (IOException ex) {
@@ -151,7 +153,7 @@ public class StageMenu extends JPanel {
     @Override
     protected void paintComponent(Graphics g /* paintbrush */) {
         super.paintComponent(g);
-        if(image != null)
+        if (image != null)
             g.drawImage(image, 0, 0, GameView.WIDTH, GameView.HEIGHT, this);
     }
 
