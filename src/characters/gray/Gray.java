@@ -17,7 +17,7 @@ import skill.Fireball.Fireball;
 import static utils.ImageStateUtils.imageStatesFromFolder;
 
 public class Gray extends Knight {
-        public static final int DAMAGE = 80;
+        public static final int DAMAGE = 60;
         public static final String AUDIO_CAST = "gray-cast";
         public static final String AUDIO_INJURED = "gray-injured";
         public static final String AUDIO_DEAD = "gray-dead";
@@ -79,7 +79,7 @@ public class Gray extends Knight {
                 switch (id) {
                         case 1:
                                 if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        mpBar.onDamaged(null, 125);
                                         spell = new Fireball(this, 1);
                                 } else {
                                         return;
@@ -87,15 +87,14 @@ public class Gray extends Knight {
                                 break;
                         case 2:
                                 if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        mpBar.onDamaged(null, 150);
                                         spell = new Fire(this, 1);
                                 } else {
                                         return;
                                 }
                                 break;
                         case 3:
-                                if (mpBar.getHp() >= Fireball.FIREBALL_MP && upBar.max()) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                if (upBar.max()) {
                                         upBar.setHp(0);
                                         spell = new FireRing(this, 1);
                                 } else {

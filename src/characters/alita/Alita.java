@@ -20,7 +20,7 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
 import static characters.knight.Knight.Event.*;
 
 public class Alita extends Knight {
-        public static final int DAMAGE = 60;
+        public static final int DAMAGE = 80;
         public static final String AUDIO_CAST = "emily-cast";
         public static final String AUDIO_INJURED = "emily-injured";
         public static final String AUDIO_DEAD = "emily-dead";
@@ -80,7 +80,7 @@ public class Alita extends Knight {
                 switch (id) {
                         case 1:
                                 if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        mpBar.onDamaged(null, 50);
                                         spell = new LightningBolt(this, 1);
                                 } else {
                                         return;
@@ -88,15 +88,14 @@ public class Alita extends Knight {
                                 break;
                         case 2:
                                 if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        mpBar.onDamaged(null, 100);
                                         spell = new Fireball(this, 100);
                                 } else {
                                         return;
                                 }
                                 break;
                         case 3:
-                                if (mpBar.getHp() >= Fireball.FIREBALL_MP && upBar.max()) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                if (upBar.max()) {
                                         upBar.setHp(0);
                                         spell = new LightningBolt(this, 1);
 

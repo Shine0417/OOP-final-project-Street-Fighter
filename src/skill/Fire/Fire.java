@@ -34,7 +34,7 @@ public class Fire extends Lightning {
     @Override
     protected void init() {
 
-        this.damage = 200;
+        this.damage = 150;
 
         String filepath = "assets/skill/fire/";
         SkillImageRenderer imageRenderer = new SkillImageRenderer(this);

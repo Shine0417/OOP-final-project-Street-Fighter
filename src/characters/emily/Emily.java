@@ -19,7 +19,7 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
 import static characters.knight.Knight.Event.*;
 
 public class Emily extends Knight {
-        public static final int DAMAGE = 100;
+        public static final int DAMAGE = 50;
         public static final String AUDIO_CAST = "emily-cast";
         public static final String AUDIO_INJURED = "emily-injured";
         public static final String AUDIO_DEAD = "emily-dead";
@@ -79,7 +79,7 @@ public class Emily extends Knight {
                 switch (id) {
                         case 1:
                                 if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        mpBar.onDamaged(null, 100);
                                         spell = new LightningBolt(this, 1);
                                 } else {
                                         return;
@@ -87,15 +87,14 @@ public class Emily extends Knight {
                                 break;
                         case 2:
                                 if (mpBar.getHp() >= Fireball.FIREBALL_MP) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                        mpBar.onDamaged(null, 150);
                                         spell = new Lightning(this, 100);
                                 } else {
                                         return;
                                 }
                                 break;
                         case 3:
-                                if (mpBar.getHp() >= Fireball.FIREBALL_MP && upBar.max()) {
-                                        mpBar.onDamaged(null, Fireball.FIREBALL_MP);
+                                if (upBar.max()) {
                                         upBar.setHp(0);
                                         spell = new IceWall(this, 1);
                                 } else {

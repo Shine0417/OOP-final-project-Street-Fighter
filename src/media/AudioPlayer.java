@@ -22,6 +22,8 @@ public class AudioPlayer {
     }
 
     public static void playSounds(Object audioName) {
+        if(audioName == null)
+            return;
         try {
             Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(sounds.get(audioName)));

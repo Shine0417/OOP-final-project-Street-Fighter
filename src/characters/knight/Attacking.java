@@ -64,7 +64,8 @@ public class Attacking extends Sequence {
             }
         }
         if (hasClash) {
-            AudioPlayer.playSounds(AUDIO);
+            if(AUDIO != null)
+                AudioPlayer.playSounds(AUDIO);
         } else {
             AudioPlayer.playSounds(AUDIO_MISS);
         }

@@ -24,7 +24,7 @@ public class LightningBolt extends Fireball {
 
     @Override
     protected void init() {
-        this.damage = 200;
+        this.damage = 50;
 
         String filepath = "assets/skill/lightningball/";
         SkillImageRenderer imageRenderer = new SkillImageRenderer(this);

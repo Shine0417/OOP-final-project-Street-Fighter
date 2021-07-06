@@ -271,14 +271,14 @@ public class CharacterMenu extends JPanel {
 
         if (team2.size() > 0) {
             drawBorder(1280, 100, -300, 400, g);
-            String path = "assets/character/" + team2.get(0).toString().toLowerCase() + "/icon/2.png";
+            String path = "assets/character/" + team2.get(0).toString().toLowerCase() + "/icon/1.png";
             g.drawImage(getProfileImage(path, 260, 160), 1280, 100, -300, 400, this);
             g.drawString(team2.get(0).toString(), 1070, 130);
         }
 
         if (team2.size() > 1) {
             drawBorder(1080, 300, -300, 400, g);
-            String path = "assets/character/" + team2.get(1).toString().toLowerCase() + "/icon/2.png";
+            String path = "assets/character/" + team2.get(1).toString().toLowerCase() + "/icon/1.png";
             g.drawImage(getProfileImage(path, 260, 160), 1080, 300, -300, 400, this);
             g.drawString(team2.get(1).toString(), 870, 330);
         }

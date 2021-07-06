@@ -42,7 +42,7 @@ public class Fireball extends HealthPointSprite {
 
     protected void init() {
 
-        this.damage = 200;
+        this.damage = 100;
 
         String filepath = "assets/skill/fireball/";
         SkillImageRenderer imageRenderer = new SkillImageRenderer(this);
